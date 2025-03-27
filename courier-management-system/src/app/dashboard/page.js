@@ -1,4 +1,5 @@
 import Card from "../_components/card/Card";
+import Header from "../_components/header/Header";
 import './styles.css';
 export default function Page() {
     const cards = [
@@ -11,10 +12,17 @@ export default function Page() {
         { no: 6, heading: "Customer Support" },
     ];
     return (
-        <div className="card-container">
-            {cards.map((card, index) => (
-                <Card key={index} no={card.no} heading={card.heading} />
-            ))}
+        <div className="dashboard">
+           <Header/>
+            <h1 className="home-txt">Home</h1>
+            <div className="card-container">
+                {cards.map((card, index) => (
+                    <Card key={index} no={card.no} heading={card.heading} />
+                ))}
+            </div>
+            <div className="footer-txt">
+                <h1>Courier Management System</h1>
+            </div>
         </div>
     );
 

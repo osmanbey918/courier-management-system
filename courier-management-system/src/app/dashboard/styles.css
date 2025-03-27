@@ -1,9 +1,25 @@
 .card-container {
     display: flex;
-    /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  */
-    max-width: 1000px; 
+    max-width: 100%; 
     margin: auto; 
     padding: 20px;
     flex-wrap: wrap;
-    border: 2px solid red;
+}
+.home-txt{
+    font-size: 36px;
+    border-bottom: 2px solid rgb(245, 234, 226);
+    margin-left: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.dashboard {
+    background-color: rgb(196, 184, 170);
+}
+.footer-txt{
+    text-align: right;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(205, 204, 204);
+
 }
