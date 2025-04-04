@@ -45,3 +45,4 @@ logs/
 *.log
 
 yarn.lock
+/src/pages/node_modules

@@ -1,4 +1,6 @@
+'use client';
 import React, { useState } from 'react';
+import axios from "axios";
 
 function TrackParcel() {
     const [parcelId, setParcelId] = useState('');
@@ -13,14 +15,10 @@ function TrackParcel() {
         try {
             setError('');
             setParcelData(null);
-            const response = await fetch(`/api/track-parcel/${parcelId}`);
-            if (!response.ok) {
-                throw new Error('Parcel not found');
-            }
-            const data = await response.json();
-            setParcelData(data);
+            const response = await axios.get(`/api/parcel?id=${parcelId}`); 
+            setParcelData(response.data); 
         } catch (err) {
-            setError(err.message);
+            setError(err.response?.data?.message || 'An error occurred'); 
         }
     };
 
