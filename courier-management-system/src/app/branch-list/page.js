@@ -1,37 +1,39 @@
-export default function Page() {
+export default async function Page() {
+    const res = await fetch('http://localhost:3000/api/branch', {
+      cache: 'no-store',
+    });
+  
+    if (!res.ok) {
+      return <div className="text-center text-red-500">Error fetching branch data</div>;
+    }
+  
+    const data = await res.json();
+  
     return (
-        <div>
-            <h1 className="text-4xl border-b-2 border-[#f5eae2] ml-5 text-white py-3">Branch List</h1>
-            <div className="flex min-h-screen w-full  bg-gray-100 px-6 ">
-                <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-none">
-                    <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Branch List</h2>
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white border border-gray-300">
-                            <thead>
-                                <tr>
-                                    <th className="py-2 px-4 border-b">Street</th>
-                                    <th className="py-2 px-4 border-b">City</th>
-                                    <th className="py-2 px-4 border-b">State</th>
-                                    <th className="py-2 px-4 border-b">Zip Code</th>
-                                    <th className="py-2 px-4 border-b">Country</th>
-                                    <th className="py-2 px-4 border-b">Contact</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className="py-2 px-4 border-b">123 Main St</td>
-                                    <td className="py-2 px-4 border-b">Springfield</td>
-                                    <td className="py-2 px-4 border-b">IL</td>
-                                    <td className="py-2 px-4 border-b">62701</td>
-                                    <td className="py-2 px-4 border-b">USA</td>
-                                    <td className="py-2 px-4 border-b">555-125432454334</td>
-                                </tr>
-                                {/* Add more rows as needed */}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      <div className="bg-gray-100 p-4">
+        <h1 className="text-3xl text-center font-bold text-white py-4 bg-blue-600 rounded-lg mb-6">
+          Branch List
+        </h1>
+  
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          {data.map((branch, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
+            >
+              <h2 className="text-xl font-bold text-gray-800 mb-2">
+                📍 {branch.city}, {branch.country}
+              </h2>
+              <div className="text-gray-700 space-y-1">
+                <p><strong>Street:</strong> {branch.street}</p>
+                <p><strong>State:</strong> {branch.state}</p>
+                <p><strong>Zip Code:</strong> {branch.zipcode}</p>
+                <p><strong>Contact:</strong> {branch.contact}</p>
+              </div>
             </div>
+          ))}
         </div>
-    )
-}
+      </div>
+    );
+  }
+  

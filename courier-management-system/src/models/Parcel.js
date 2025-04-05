@@ -1,9 +1,26 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const parcelSchema = new mongoose.Schema({
-    id: { type: String, required: true, unique: true },
-    status: { type: String, required: true },
-    location: { type: String, required: true },
-});
+// Create Schema
+const parcelSchema = new mongoose.Schema(
+  {
+    id: {
+      type: String,
+      required: true,
+      unique: true, // Ensure the ID is unique
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: ['Pending', 'In Transit', 'Delivered'], // Limit status to these options
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Parcel', parcelSchema);
+// Export the model
+const Parcel = mongoose.models.Parcel || mongoose.model('Parcel', parcelSchema);
+export default Parcel;

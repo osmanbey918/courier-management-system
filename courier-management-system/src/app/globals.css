@@ -4,15 +4,3 @@
     min-height: 100vh;
     background-color: rgb(196, 184, 170);
 }
-.header{
-    height: 100px;
-    
-}
-.head-txt{
-        font-size: 24px;
-        height: 80px;
-        padding: auto;
-        justify-content: space-between;
-        padding: 20px;
-        /* background-color: rgb(19, 76, 104); */
-}

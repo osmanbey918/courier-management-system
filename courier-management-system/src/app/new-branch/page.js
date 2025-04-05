@@ -1,9 +1,10 @@
 "use client";
+import { Building2 } from "lucide-react"; // Optional icon
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "../_components/header/Header";
-
-export default function Branch() {
+import axios from "axios";
+export default function Page() {
     const router = useRouter();
     const [formData, setFormData] = useState({
         street: "",
@@ -20,11 +21,16 @@ export default function Branch() {
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Branch Data:", formData);
-        alert("Branch Saved Successfully!"); // Replace with API call
-    };
+        try {
+            const response = await axios.post('/api/branch', formData);
+            console.log("we done");
+        } catch (err) {
+            setError(err.response?.data?.message || 'Something went wrong');
+        }
+    }
 
     // Handle Cancel
     const handleCancel = () => {
@@ -40,33 +46,64 @@ export default function Branch() {
     };
 
     return (
-        <div>
-            <Header />
-            <h1 className="text-4xl border-b-2 border-[#f5eae2] ml-5 text-white py-3">New Branch</h1>
-
-            <div className="flex justify-center min-h-screen bg-gray-100 px-6">
-                <div className="bg-white shadow-lg rounded-lg p-6 w-full">
-                    <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">New Branch</h2>
-                    
-                    <form onSubmit={handleSubmit} className="flex flex-wrap gap-6 justify-center">
-                        <input type="text" name="street" value={formData.street} onChange={handleChange} placeholder="Street" className="min-w-[320px] max-w-[40%] flex-1 p-4 border border-gray-300 rounded-lg text-lg" required />
-                        <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" className="min-w-[320px] max-w-[40%] flex-1 p-4 border border-gray-300 rounded-lg text-lg" required />
-                        <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" className="min-w-[320px] max-w-[40%] flex-1 p-4 border border-gray-300 rounded-lg text-lg" required />
-                        <input type="text" name="zipcode" value={formData.zipcode} onChange={handleChange} placeholder="Zip Code" className="min-w-[320px] max-w-[40%] flex-1 p-4 border border-gray-300 rounded-lg text-lg" required />
-                        <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" className="min-w-[320px] max-w-[40%] flex-1 p-4 border border-gray-300 rounded-lg text-lg" required />
-                        <input type="text" name="contact" value={formData.contact} onChange={handleChange} placeholder="Contact" className="min-w-[320px] max-w-[40%] flex-1 p-4 border border-gray-300 rounded-lg text-lg" required />
-
-                        {/* Buttons */}
-                        <div className="w-full flex justify-between mt-6">
-                            <button type="submit" className="w-1/2 bg-blue-600 text-white p-4 rounded-lg text-lg hover:bg-blue-700 transition">Save</button>
-                            <button type="button" onClick={handleCancel} className="w-1/2 bg-gray-400 text-white p-4 rounded-lg text-lg hover:bg-gray-500 transition ml-2">Cancel</button>
-                        </div>
-                    </form>
+        <div className=" bg-[#EDE9E3]">
+            <div className="p-6">
+                {/* Header */}
+                <div className="flex items-center gap-3 ml-5 mb-6 border-b-2 border-[#d4cfc7] pb-3">
+                    <Building2 className="text-white bg-gray-700 p-1 rounded-full w-8 h-8" />
+                    <h1 className="text-3xl font-semibold text-gray-800">New Branch</h1>
                 </div>
-            </div>
 
-            <div className="text-center text-white py-5 bg-gray-900 mt-5">
-                <h1 className="text-lg">Courier Management System</h1>
+                {/* Form Container */}
+                <div className="flex justify-center px-4 md:px-10">
+                    <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-4xl">
+                        <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
+                            Enter Branch Details
+                        </h2>
+
+                        <form
+                            onSubmit={handleSubmit}
+                            className="flex flex-wrap justify-between gap-6"
+                        >
+                            {[
+                                { name: "street", placeholder: "Street" },
+                                { name: "city", placeholder: "City" },
+                                { name: "state", placeholder: "State" },
+                                { name: "zipcode", placeholder: "Zip Code" },
+                                { name: "country", placeholder: "Country" },
+                                { name: "contact", placeholder: "Contact" },
+                            ].map((field) => (
+                                <input
+                                    key={field.name}
+                                    type="text"
+                                    name={field.name}
+                                    value={formData[field.name]}
+                                    onChange={handleChange}
+                                    placeholder={field.placeholder}
+                                    className="flex-1 min-w-[260px] max-w-[48%] p-4 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    required
+                                />
+                            ))}
+
+                            {/* Buttons */}
+                            <div className="w-full flex flex-col sm:flex-row justify-between mt-6 gap-4">
+                                <button
+                                    type="submit"
+                                    className="flex-1 bg-blue-600 text-white py-3 rounded-lg text-lg hover:bg-blue-700 transition"
+                                >
+                                    Save
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleCancel}
+                                    className="flex-1 bg-gray-500 text-white py-3 rounded-lg text-lg hover:bg-gray-600 transition"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     );
