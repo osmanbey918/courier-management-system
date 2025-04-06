@@ -15,11 +15,11 @@ export default async function Page() {
           Branch List
         </h1>
   
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {data.map((branch, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
+              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 "
             >
               <h2 className="text-xl font-bold text-gray-800 mb-2">
                 📍 {branch.city}, {branch.country}
@@ -29,6 +29,7 @@ export default async function Page() {
                 <p><strong>State:</strong> {branch.state}</p>
                 <p><strong>Zip Code:</strong> {branch.zipcode}</p>
                 <p><strong>Contact:</strong> {branch.contact}</p>
+                <p><strong>Branch Code</strong> {branch._id}</p>
               </div>
             </div>
           ))}
