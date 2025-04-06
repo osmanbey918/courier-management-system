@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { useState } from "react";
 
 export default function AddBranchStaff() {
@@ -19,10 +20,10 @@ export default function AddBranchStaff() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitted Staff Data:", formData);
-    alert("Staff member added successfully!");
+    const res = await axios.post("/api/staff", formData)
   };
 
   const handleCancel = () => {
