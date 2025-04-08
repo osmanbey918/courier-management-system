@@ -1,6 +1,5 @@
 "use client";
-import { Building2 } from "lucide-react"; // Optional icon
-
+import { Building2 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -46,8 +45,8 @@ export default function Page() {
     };
 
     return (
-        <div className=" bg-[#EDE9E3]">
-            <div className="p-6">
+        <div className=" bg-[#EDE9E3] min-h-auto">
+            <div className="p-6 min-h-[max-content]">
                 {/* Header */}
                 <div className="flex items-center gap-3 ml-5 mb-6 border-b-2 border-[#d4cfc7] pb-3">
                     <Building2 className="text-white bg-gray-700 p-1 rounded-full w-8 h-8" />
@@ -55,15 +54,15 @@ export default function Page() {
                 </div>
 
                 {/* Form Container */}
-                <div className="flex justify-center px-4 md:px-10">
-                    <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-4xl">
+                <div className="flex justify-center  ">
+                    <div className=" shadow-xl rounded-xl p-8 w-full ">
                         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
                             Enter Branch Details
                         </h2>
 
                         <form
                             onSubmit={handleSubmit}
-                            className="flex flex-wrap justify-between gap-6"
+                            className="flex flex-wrap justify-between gap-6 "
                         >
                             {[
                                 { name: "street", placeholder: "Street" },
@@ -80,7 +79,7 @@ export default function Page() {
                                     value={formData[field.name]}
                                     onChange={handleChange}
                                     placeholder={field.placeholder}
-                                    className="flex-1 min-w-[260px] max-w-[48%] p-4 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    className="flex-1 min-w-[300px] max-w-[48%] p-4 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     required
                                 />
                             ))}
