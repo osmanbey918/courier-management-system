@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import { useState } from 'react';
 
 export default function CreateParcelPage() {
@@ -21,7 +22,9 @@ export default function CreateParcelPage() {
     setError('');
 
     try {
+      
       const res = await axios.post('/api/parcel', form); // baseURL handles `/api`
+      console.log('Form data:', form); // Debugging line
       setMessage(res.data.message);
       setForm({ id: '', status: '', location: '' });
     } catch (err) {

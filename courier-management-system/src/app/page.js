@@ -6,6 +6,7 @@ import axios from "axios";
 export default function Page() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -16,6 +17,7 @@ export default function Page() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const res = await axios.post("/api/login", formData);
@@ -34,6 +36,8 @@ export default function Page() {
     } catch (err) {
       setError("Invalid credentials or server error.");
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,8 +68,9 @@ export default function Page() {
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition"
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

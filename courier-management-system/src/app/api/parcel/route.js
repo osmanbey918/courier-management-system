@@ -21,6 +21,7 @@ export async function POST(req) {
     try {
       await connectDB(); // Ensure DB is connected
   
+      console.log("hel");
       const data = await req.json();
       const { id, status, location } = data;
   
@@ -29,7 +30,7 @@ export async function POST(req) {
           status: 400,
         });
       }
-  
+      
       const newParcel = await Parcel.create({ id, status, location });
   
       return new Response(JSON.stringify({ message: "Parcel created successfully", parcel: newParcel }), {

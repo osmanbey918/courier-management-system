@@ -1,7 +1,12 @@
 import { serialize } from "cookie";
+import { withMiddleware } from "@/lib/middleware/middleware"; // adjust path if needed
 
-export default function handler(req, res) {
+function handler(req, res) {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password are required" });
+  }
 
   const users = [
     { email: "admin@test.com", password: "123456", role: "admin" },
@@ -35,3 +40,6 @@ export default function handler(req, res) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 }
+
+// Export with middleware wrapper
+export default withMiddleware(handler);
