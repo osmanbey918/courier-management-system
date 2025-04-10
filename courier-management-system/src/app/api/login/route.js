@@ -34,6 +34,8 @@ function handler(req, res) {
         maxAge: 60 * 60 * 24, // 1 day
       })
     );
+    console.log("api lgoin ");
+    
 
     return res.status(200).json({ role: user.role });
   } else {
