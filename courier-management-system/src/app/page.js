@@ -23,13 +23,14 @@ export default function Page() {
       const res = await axios.post("/api/login", formData);
       const { role } = res.data;
 
+      localStorage.setItem("role", role);
       // Redirect based on role
       if (role === "admin") {
-        router.push("/dashboard");
+        router.push("/dashboard/admin");
       } else if (role === "staff") {
-        router.push("/services");
+        router.push("/dashboard/staff");
       } else if (role === "delivery") {
-        router.push("/dashboard/delivery");
+        router.push("/dashboard/rider");
       } else {
         setError("Unknown role. Access denied.");
       }

@@ -22,6 +22,7 @@ export async function POST(request) {
   }
 
   const token = signToken({ email: user.email, role: user.role });
+  console.log("Token:", token); // For debugging
 
   const response = NextResponse.json({ role: user.role }, { status: 200 });
 
@@ -34,6 +35,5 @@ export async function POST(request) {
       maxAge: 60 * 60 * 24,
     })
   );
-
   return response;
 }

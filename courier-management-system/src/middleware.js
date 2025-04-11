@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { verifyToken } from "@/lib/jwt";
+import { verifyToken } from "../src/lib/jwt/jwt";
 
 export function middleware(req) {
   const token = req.cookies.get("token")?.value;
@@ -9,24 +9,24 @@ export function middleware(req) {
     url.pathname = "/unauthorized";
     return NextResponse.redirect(url);
   }
-console.log(" i am working bnice");
+  console.log(" i am working bnice");
 
   try {
     const decoded = verifyToken(token);
     const role = decoded.role;
     const path = req.nextUrl.pathname;
 
-    if (path.startsWith("/dashboard") && role !== "admin") {
+    if (path.startsWith("/dashboard/staff") && !(role === "staff" || role === "admin")) {
       url.pathname = "/unauthorized";
       return NextResponse.redirect(url);
     }
 
-    if (path.startsWith("/dashboard/staff") && role !== "staff") {
+    if (path.startsWith("/dashboard/delivery") && !(role === "delivery" || role === "admin")) {
       url.pathname = "/unauthorized";
       return NextResponse.redirect(url);
     }
 
-    if (path.startsWith("/dashboard/delivery") && role !== "delivery") {
+    if (path.startsWith("/dashboard/delivery") && role !== "delivery" || role !== "admin") {
       url.pathname = "/unauthorized";
       return NextResponse.redirect(url);
     }
