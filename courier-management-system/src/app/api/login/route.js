@@ -1,15 +1,14 @@
-import { serialize } from "cookie";
-import { withMiddleware } from "@/lib/middleware/middleware"; // adjust path if needed
+// app/api/login/route.js
+import { NextResponse } from 'next/server';
+import { serialize } from 'cookie';
+import { signToken } from '@/lib/jwt/jwt';
 
-function handler(req, res) {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email and password are required" });
-  }
+export async function POST(request) {
+  const body = await request.json();
+  const { email, password } = body;
 
   const users = [
-    { email: "admin@test.com", password: "123456", role: "admin" },
+    { email: "admin@admin.com", password: "123456", role: "admin" },
     { email: "staff@test.com", password: "123456", role: "staff" },
     { email: "delivery@test.com", password: "123456", role: "delivery" },
   ];
@@ -18,30 +17,23 @@ function handler(req, res) {
     (u) => u.email === email && u.password === password
   );
 
-  if (user) {
-    const tokenPayload = {
-      email: user.email,
-      role: user.role,
-    };
-
-    const token = Buffer.from(JSON.stringify(tokenPayload)).toString("base64");
-
-    res.setHeader(
-      "Set-Cookie",
-      serialize("token", `header.${token}.sig`, {
-        path: "/",
-        httpOnly: true,
-        maxAge: 60 * 60 * 24, // 1 day
-      })
-    );
-    console.log("api lgoin ");
-    
-
-    return res.status(200).json({ role: user.role });
-  } else {
-    return res.status(401).json({ message: "Invalid credentials" });
+  if (!user) {
+    return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
   }
-}
 
-// Export with middleware wrapper
-export default withMiddleware(handler);
+  const token = signToken({ email: user.email, role: user.role });
+
+  const response = NextResponse.json({ role: user.role }, { status: 200 });
+
+  // Set cookie manually
+  response.headers.set(
+    'Set-Cookie',
+    serialize("token", token, {
+      path: "/",
+      httpOnly: true,
+      maxAge: 60 * 60 * 24,
+    })
+  );
+
+  return response;
+}

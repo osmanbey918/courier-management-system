@@ -1,41 +1,44 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { verifyToken } from "@/lib/jwt";
 
-export function roleMiddleware(request) {
-  const token = request.cookies.get('token')?.value;
-  console.log(token);
+export function middleware(req) {
+  const token = req.cookies.get("token")?.value;
+  const url = req.nextUrl.clone();
 
   if (!token) {
-    return NextResponse.redirect(new URL('/unauthorized', request.url));
+    url.pathname = "/unauthorized";
+    return NextResponse.redirect(url);
   }
+console.log(" i am working bnice");
 
   try {
-    const parts = token.split('.');
-    if (parts.length !== 3) {
-      throw new Error('Invalid token format');
-    }
-
-    const payload = parts[1];
-    const decoded = JSON.parse(atob(payload));
-
+    const decoded = verifyToken(token);
     const role = decoded.role;
-    const pathname = request.nextUrl.pathname;
+    const path = req.nextUrl.pathname;
 
-    // Role-based route checks
-    if (pathname.startsWith('/dashboard/admin') && role !== 'admin') {
-      return NextResponse.redirect(new URL('/unauthorized', request.url));
+    if (path.startsWith("/dashboard") && role !== "admin") {
+      url.pathname = "/unauthorized";
+      return NextResponse.redirect(url);
     }
 
-    if (pathname.startsWith('/dashboard/staff') && role !== 'staff') {
-      return NextResponse.redirect(new URL('/unauthorized', request.url));
+    if (path.startsWith("/dashboard/staff") && role !== "staff") {
+      url.pathname = "/unauthorized";
+      return NextResponse.redirect(url);
     }
 
-    if (pathname.startsWith('/dashboard/delivery') && role !== 'delivery') {
-      return NextResponse.redirect(new URL('/unauthorized', request.url));
+    if (path.startsWith("/dashboard/delivery") && role !== "delivery") {
+      url.pathname = "/unauthorized";
+      return NextResponse.redirect(url);
     }
 
-    return NextResponse.next(); // All good
+    return NextResponse.next();
   } catch (err) {
-    console.error('❌ Invalid token:', err);
-    return NextResponse.redirect(new URL('/unauthorized', request.url));
+    console.error("JWT Error:", err);
+    url.pathname = "/unauthorized";
+    return NextResponse.redirect(url);
   }
 }
+
+export const config = {
+  matcher: ["/dashboard/:path*"],
+};

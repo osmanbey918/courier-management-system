@@ -25,9 +25,9 @@ export default function Page() {
 
       // Redirect based on role
       if (role === "admin") {
-        router.push("/dashboard/admin");
+        router.push("/dashboard");
       } else if (role === "staff") {
-        router.push("/dashboard/staff");
+        router.push("/services");
       } else if (role === "delivery") {
         router.push("/dashboard/delivery");
       } else {
