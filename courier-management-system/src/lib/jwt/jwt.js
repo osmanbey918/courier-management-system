@@ -7,5 +7,7 @@ export const signToken = (payload) => {
 };
 
 export const verifyToken = (token) => {
+  console.log("helo jwts");
+  
   return jwt.verify(token, secret);
 };

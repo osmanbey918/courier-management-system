@@ -23,8 +23,11 @@ export default function Page() {
       const res = await axios.post("/api/login", formData);
       const { role } = res.data;
 
-      localStorage.setItem("role", role);
-      // Redirect based on role
+      // localStorage.setItem("role", role);
+      // console.log(role);
+      // const rolee = await axios.get("/api/role")
+      // console.log(rolee);
+      
       if (role === "admin") {
         router.push("/dashboard/admin");
       } else if (role === "staff") {

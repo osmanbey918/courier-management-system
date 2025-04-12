@@ -1,44 +1,40 @@
-import { NextResponse } from "next/server";
-import { verifyToken } from "../src/lib/jwt/jwt";
+// middleware.js
+import { NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
-export function middleware(req) {
-  const token = req.cookies.get("token")?.value;
+export async function middleware(req) {
+  const token = await getToken({ req, secret: process.env.JWT_SECRET });
+
   const url = req.nextUrl.clone();
+  const path = req.nextUrl.pathname;
 
+  // No token at all — redirect to unauthorized
   if (!token) {
-    url.pathname = "/unauthorized";
+    url.pathname = '/unauthorized';
     return NextResponse.redirect(url);
   }
-  console.log(" i am working bnice");
 
-  try {
-    const decoded = verifyToken(token);
-    const role = decoded.role;
-    const path = req.nextUrl.pathname;
+  const role = token.role;
 
-    if (path.startsWith("/dashboard/staff") && !(role === "staff" || role === "admin")) {
-      url.pathname = "/unauthorized";
-      return NextResponse.redirect(url);
-    }
-
-    if (path.startsWith("/dashboard/delivery") && !(role === "delivery" || role === "admin")) {
-      url.pathname = "/unauthorized";
-      return NextResponse.redirect(url);
-    }
-
-    if (path.startsWith("/dashboard/delivery") && role !== "delivery" || role !== "admin") {
-      url.pathname = "/unauthorized";
-      return NextResponse.redirect(url);
-    }
-
-    return NextResponse.next();
-  } catch (err) {
-    console.error("JWT Error:", err);
-    url.pathname = "/unauthorized";
+  // Route protection
+  if (path.startsWith('/dashboard/admin') && role !== 'admin') {
+    url.pathname = '/unauthorized';
     return NextResponse.redirect(url);
   }
+
+  if (path.startsWith('/dashboard/staff') && role !== 'staff' && role !== 'admin') {
+    url.pathname = '/unauthorized';
+    return NextResponse.redirect(url);
+  }
+
+  if (path.startsWith('/dashboard/delivery') && role !== 'delivery' && role !== 'admin') {
+    url.pathname = '/unauthorized';
+    return NextResponse.redirect(url);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ['/dashboard/:path*'],
 };
