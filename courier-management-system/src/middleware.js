@@ -1,20 +1,26 @@
 // middleware.js
 import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
+import { jwtVerify } from 'jose';
 
+ async function verifyToken(token) {
+  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+  const { payload } = await jwtVerify(token, secret);  
+  return payload; // returns decoded payload
+}
 export async function middleware(req) {
-  const token = await getToken({ req, secret: process.env.JWT_SECRET });
-
-  const url = req.nextUrl.clone();
-  const path = req.nextUrl.pathname;
-
+  const token = req.cookies.get("token")?.value;
   // No token at all — redirect to unauthorized
   if (!token) {
+    console.log("no token");
     url.pathname = '/unauthorized';
     return NextResponse.redirect(url);
   }
+  const data =  await verifyToken(token);
+  const role = data.role;
+  const url = req.nextUrl.clone();
+  const path = req.nextUrl.pathname;
 
-  const role = token.role;
+  console.log('role', role);
 
   // Route protection
   if (path.startsWith('/dashboard/admin') && role !== 'admin') {
