@@ -2,12 +2,12 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
- async function verifyToken(token) {
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-  const { payload } = await jwtVerify(token, secret);  
-  return payload; // returns decoded payload
-}
 export async function middleware(req) {
+  async function verifyToken(token) {
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const { payload } = await jwtVerify(token, secret);
+    return payload; // returns decoded payload
+  }
   const token = req.cookies.get("token")?.value;
   // No token at all — redirect to unauthorized
   if (!token) {
@@ -15,7 +15,7 @@ export async function middleware(req) {
     url.pathname = '/unauthorized';
     return NextResponse.redirect(url);
   }
-  const data =  await verifyToken(token);
+  const data = await verifyToken(token);
   const role = data.role;
   const url = req.nextUrl.clone();
   const path = req.nextUrl.pathname;
