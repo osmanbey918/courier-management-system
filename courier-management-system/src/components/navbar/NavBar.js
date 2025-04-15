@@ -2,11 +2,23 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import axios from "axios";
 
 export default function NavBar() {
+  const [role, setRole] = useState(null)
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    async function getRole() {
+      const data = await axios.get('/api/role');
+      setRole(data.data)
+    }
+    getRole();
+
+  }, [])
+  console.log(role);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -41,19 +53,20 @@ export default function NavBar() {
       >
         <div className="text-2xl font-bold mb-6">📦 Courier Admin</div>
 
-        <button className="p-2 text-left hover:bg-gray-700 block w-full" onClick={() => router.push("/dashboard")}>
+        <button className="p-2 text-left hover:bg-gray-700 block w-full" onClick={() => router.push(`/dashboard/${role}`)}>
           🏠 Dashboard
         </button>
 
         {/* Branch */}
-        <div className="mt-4">
+        {role === 'admin'? <div className="mt-4">
           <label htmlFor="branch-select" className="block text-sm mb-1">🏢 Branch</label>
           <select id="branch-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
             <option value="">Select</option>
             <option value="/new-branch">➕ Add New Branch</option>
             <option value="/branch-list">📃 Branch List</option>
           </select>
-        </div>
+        </div>: ''}
+        
 
         {/* Staff */}
         <div className="mt-4">
