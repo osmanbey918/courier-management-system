@@ -3,17 +3,8 @@ import "./globals.css";
 import NavBar from "@/components/navbar/NavBar";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import NavWrapper from "@/components/navbar/NavWrapper";
 
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata = {
   title: "Create Next App",
@@ -24,14 +15,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className="layout flex ">
-          <NavBar role={"admin"}/>
-
+          <NavWrapper />
           <div className="flex-1 flex flex-col">
             <Header />
             <main className="content p-4" >{children}</main>
           </div>
         </div>
-          <Footer />
+        <Footer />
       </body>
     </html>
   );

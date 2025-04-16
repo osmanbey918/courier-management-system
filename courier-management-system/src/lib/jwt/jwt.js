@@ -13,9 +13,9 @@ export const signToken = (payload) => {
 //   return jwt.verify(token, secret);
 // };
 
-// export async function verifyToken(req) {
-//   const token = cookies.get("token")?.value;
-//   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-//   const { payload } = await jwtVerify(token, secret);
-//   return payload; // returns decoded payload
-// }  
+export async function verifyToken(token) {
+  // const token = cookies.get("token")?.value;
+  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+  const { payload } = await jwtVerify(token, secret);
+  return payload; // returns decoded payload
+}  
