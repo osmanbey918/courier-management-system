@@ -58,15 +58,15 @@ export default function NavBar() {
         </button>
 
         {/* Branch */}
-        {role === 'admin'? <div className="mt-4">
+        {role === 'admin' ? <div className="mt-4">
           <label htmlFor="branch-select" className="block text-sm mb-1">🏢 Branch</label>
           <select id="branch-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
             <option value="">Select</option>
             <option value="/new-branch">➕ Add New Branch</option>
             <option value="/branch-list">📃 Branch List</option>
           </select>
-        </div>: ''}
-        
+        </div> : ''}
+
 
         {/* Staff */}
         <div className="mt-4">
@@ -83,8 +83,8 @@ export default function NavBar() {
           <label htmlFor="parcel-select" className="block text-sm mb-1">📦 Parcels</label>
           <select id="parcel-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
             <option value="">Select</option>
-            <option value="/track-parcel">📍 Track Parcel</option>
-            <option value="/parcel-list">📃 Parcel List</option>
+            <option value="/parcel/track-parcel">📍 Track Parcel</option>
+            <option value="/parcel/parcel-list">📃 Parcel List</option>
           </select>
         </div>
 

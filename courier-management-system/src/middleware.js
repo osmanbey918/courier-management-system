@@ -55,7 +55,10 @@ export const config = {
   matcher: [
     '/dashboard/:path*', // Protect all /dashboard routes
     '/add-staff',     // Protect all /admin routes
-    '/staff/:path*',     // Protect all /staff routes
-    '/delivery/:path*'   // Protect all /delivery routes
+    '/branch-list',     // Protect all /staff routes
+    '/new-branch' ,
+    '/staff-list',
+    '/parcel/:path*',
+
   ],
 };
