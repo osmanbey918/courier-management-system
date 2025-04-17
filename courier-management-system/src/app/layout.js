@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
           <NavWrapper />
           <div className="flex-1 flex flex-col">
             <Header />
-            <main className="content p-4" >{children}</main>
+            <main className="content" >{children}</main>
           </div>
         </div>
         <Footer />

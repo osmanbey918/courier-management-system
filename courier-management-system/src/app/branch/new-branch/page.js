@@ -45,10 +45,10 @@ export default function Page() {
     };
 
     return (
-        <div className=" bg-[#EDE9E3] min-h-auto">
-            <div className="p-6 min-h-[max-content]">
+        <div className=" bg-[#EDE9E3]">
+            <div className="p-6 min-h-[87vh]">
                 {/* Header */}
-                <div className="flex items-center gap-3 ml-5 mb-6 border-b-2 border-[#d4cfc7] pb-3">
+                <div className="  flex items-center gap-3 ml-5 mb-6 border-b-2 border-[#d4cfc7] pb-3  ">
                     <Building2 className="text-white bg-gray-700 p-1 rounded-full w-8 h-8" />
                     <h1 className="text-3xl font-semibold text-gray-800">New Branch</h1>
                 </div>
@@ -79,7 +79,7 @@ export default function Page() {
                                     value={formData[field.name]}
                                     onChange={handleChange}
                                     placeholder={field.placeholder}
-                                    className="flex-1 min-w-[300px] max-w-[48%] p-4 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    className="flex-1 min-w-[calc(45%+40px)] max-w-[100%] p-3 border border-gray-300 rounded text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     required
                                 />
                             ))}

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import axios from "axios";
+import Link from "next/link";
 
 export default function NavBar() {
   const [role, setRole] = useState(null)
@@ -28,8 +29,11 @@ export default function NavBar() {
   }, []);
 
   const handleSelectChange = (e) => {
-    const value = e.target.value;
-    if (value) router.push(value);
+    let value = e.target.value;
+    if (value) {
+      router.push(value);
+      value = ''
+    }
   };
 
   return (
@@ -62,8 +66,8 @@ export default function NavBar() {
           <label htmlFor="branch-select" className="block text-sm mb-1">🏢 Branch</label>
           <select id="branch-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
             <option value="">Select</option>
-            <option value="/new-branch">➕ Add New Branch</option>
-            <option value="/branch-list">📃 Branch List</option>
+            <option value="/branch/new-branch">➕ Add New Branch</option>
+            <option value="/branch/branch-list">📃 Branch List</option>
           </select>
         </div> : ''}
 
@@ -73,8 +77,8 @@ export default function NavBar() {
           <label htmlFor="staff-select" className="block text-sm mb-1">👨‍💼 Branch Staff</label>
           <select id="staff-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
             <option value="">Select</option>
-            <option value="/add-staff">➕ Add Staff</option>
-            <option value="/staff-list">📃 Staff List</option>
+            <option value="/staff/add-staff">➕ Add Staff</option>
+            <option value="/staff/staff-list">📃 Staff List</option>
           </select>
         </div>
 
@@ -83,6 +87,7 @@ export default function NavBar() {
           <label htmlFor="parcel-select" className="block text-sm mb-1">📦 Parcels</label>
           <select id="parcel-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
             <option value="">Select</option>
+            <option value="/parcel/new-parcel">📦 New Parcel</option>
             <option value="/parcel/track-parcel">📍 Track Parcel</option>
             <option value="/parcel/parcel-list">📃 Parcel List</option>
           </select>
