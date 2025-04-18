@@ -14,6 +14,8 @@ export async function GET(req) {
     }
 
     const parcels = await Parcel.find();
+    console.log(parcels);
+    
     return Response.json(parcels);
 }
 
