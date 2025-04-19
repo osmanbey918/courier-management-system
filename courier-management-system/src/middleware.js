@@ -36,11 +36,15 @@ export async function middleware(req) {
       return NextResponse.redirect(url);
     }
 
-    if (path.startsWith('/dashboard/delivery') && role !== 'delivery' && role !== 'admin') {
+    if (path.startsWith('/dashboard/delivery') && (role !== 'delivery' || role !== 'admin')) {
       url.pathname = '/unauthorized';
       return NextResponse.redirect(url);
     }
-
+    if (path.startsWith('/branch/new-branch') && role !== 'admin') {
+      url.pathname = '/unauthorized';
+      return NextResponse.redirect(url);
+    }
+    
     // ✅ Allow if authenticated & authorized
     return NextResponse.next();
 
