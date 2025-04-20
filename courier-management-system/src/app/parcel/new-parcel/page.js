@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-export default function CreateParcelPage() {
+export default function Page() {
   const [form, setForm] = useState({ id: '', status: '', location: '' });
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -20,10 +20,10 @@ export default function CreateParcelPage() {
     e.preventDefault();
     setMessage('');
     setError('');
-
+    // setForm({ ...form, branchName: }); // Default to 'Pending' if status is not set
     try {
       
-      const res = await axios.post('/api/parcel', form); // baseURL handles `/api`
+      const res = await axios.post('/api/parcel', form); 
       console.log('Form data:', form); // Debugging line
       setMessage(res.data.message);
       setForm({ id: '', status: '', location: '' });
