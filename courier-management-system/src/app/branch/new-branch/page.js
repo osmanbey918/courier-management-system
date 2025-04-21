@@ -23,9 +23,12 @@ export default function Page() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Branch Data:", formData);
+        const branchCode = Math.floor(1000 + Math.random() * 9000);
+
         try {
-            const response = await axios.post('/api/branch', formData);
-            console.log("we done");
+            const response = await axios.post('/api/branch', { ...formData, branchCode });
+            console.log("Branch created with code:", branchCode);
+            router.push("/branch/branch-list"); // Redirect to home page after successful creation
         } catch (err) {
             setError(err.response?.data?.message || 'Something went wrong');
         }

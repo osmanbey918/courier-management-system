@@ -1,4 +1,4 @@
-import ParcelDel from "@/components/parcelDel/ParcelDel"
+import DeleteBtn from "@/components/deleteBtn/DeleteBtn"
 
 export default async function Page() {
     const list = await fetch('http://localhost:3000/api/parcel', {
@@ -27,7 +27,7 @@ export default async function Page() {
                             <p className="text-gray-700">
                                 <strong>Location:</strong> {data.location}
                             </p>
-                            <ParcelDel id={data.id} />
+                            <DeleteBtn id={data.id} status={'parcel'}/>
                         </div>
                     </div>
                 ))}

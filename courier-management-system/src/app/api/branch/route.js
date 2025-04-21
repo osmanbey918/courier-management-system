@@ -8,10 +8,10 @@ export async function POST(req) {
         const data = await req.json();
         console.log("📦 Received data:", data);
 
-        const { street, city, state, zipcode, country, contact } = data;
+        const { street, city, state, zipcode, country, contact, branchCode } = data;
 
         // Validate required fields
-        if (!street || !city || !state || !zipcode || !country || !contact) {
+        if (!street || !city || !state || !zipcode || !country || !contact || !branchCode) {
             return new Response(JSON.stringify({ message: "All fields are required" }), {
                 status: 400,
             });
@@ -25,6 +25,7 @@ export async function POST(req) {
             zipcode,
             country,
             contact,
+            branchCode,
         });
 
         console.log("✅ Branch created:", newBranch);
@@ -52,4 +53,37 @@ export async function GET() {
             status: 500,
         });
     }
+}
+
+export async function DELETE(req) {
+  try {
+    await connectDB(); // Ensure DB is connected
+
+    const id = await req.json().then(data => data.id); // Extract ID from request body
+    console.log("Deleting Branch with ID:", id); // Log the ID being deleted
+
+    if (!id) {
+      return new Response(JSON.stringify({ message: "ID is required" }), {
+        status: 400,
+      });
+    }
+
+    const deletedBranch = await Branch.findOneAndDelete({ _id: id });
+
+    if (!deletedBranch) {
+      return new Response(JSON.stringify({ message: "Branch not found" }), {
+        status: 404,
+      });
+    }
+    
+    return new Response(JSON.stringify({ message: "Branch deleted successfully" }), {
+      status: 200,
+    });
+  }
+  catch (error) {
+    console.error("❌ Error deleting Branch:", error);
+    return new Response(JSON.stringify({ message: "Internal Server Error" }), {
+      status: 500,
+    });
+  }
 }

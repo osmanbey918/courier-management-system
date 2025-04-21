@@ -25,6 +25,11 @@ const branchSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        branchCode: {
+            type: Number,
+            required: true,
+            unique: true,
+        },
     },
     { timestamps: true }
 );
