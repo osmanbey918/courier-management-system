@@ -44,7 +44,7 @@ export async function GET() {
     try {
         await connectDB();
         const branches = await Branch.find({});
-        console.log("📦 All branches:", branches);
+        // console.log("📦 All branches:", branches);
         return Response.json(branches || []);
 
     } catch (error) {

@@ -1,8 +1,25 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AddBranchStaff() {
+  const [branches, setBranches] = useState([]);
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const response = await axios.get("/api/branch");
+        const branchList = response.data.map((branch) =>
+          `${branch.city}, ${branch.street}`
+        );
+        setBranches(branchList);
+      } catch (error) {
+        console.error("❌ Error fetching branches:", error);
+      }
+    };
+
+    fetchBranches();
+  }, []);
+  console.log("Branches:", branches); // Debugging line
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,7 +30,8 @@ export default function AddBranchStaff() {
     gender: "",
   });
 
-  const branches = ["Karachi", "Lahore", "Islamabad", "Peshawar"];
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,9 +41,27 @@ export default function AddBranchStaff() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitted Staff Data:", formData);
-    const res = await axios.post("/api/staff", formData)
+  
+    try {
+      const res = await axios.post("/api/staff", formData);
+      console.log("Staff created successfully:", res.data);
+      alert("Staff created successfully!");
+  
+      // Reset form after successful submission
+      setFormData({
+        name: "",
+        email: "",
+        contact: "",
+        role: "",
+        branch: "",
+        age: "",
+      });
+    } catch (error) {
+      console.error("Error creating staff:", error);
+      alert("Something went wrong while creating the staff.");
+    }
   };
-
+  
   const handleCancel = () => {
     setFormData({
       name: "",
@@ -138,7 +174,7 @@ export default function AddBranchStaff() {
                 required
               >
                 <option value="">Select Branch</option>
-                {branches.map((branch, index) => (
+                {branches && branches.map((branch, index) => (
                   <option key={index} value={branch}>
                     {branch}
                   </option>

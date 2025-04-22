@@ -11,7 +11,7 @@ export async function POST(req) {
         console.log("✅ Staff created:", res);
         return new Response(JSON.stringify({ message: "staff created successfully", staff: res }), {
             status: 201,
-          });
+        });
 
     } catch (error) {
         console.error("❌ Error creating staff:", error);
