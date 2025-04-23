@@ -1,5 +1,6 @@
 import connectDB from '@/lib/db';
 import Parcel from '@/models/Parcel';
+import { v4 as uuidv4 } from 'uuid';
 
 // GET: /api/parcel?id=123 or just /api/parcel
 export async function GET(req) {
@@ -23,17 +24,30 @@ export async function POST(req) {
   try {
     await connectDB(); // Ensure DB is connected
 
-    console.log("hel");
     const data = await req.json();
-    const { id, status, location } = data;
+    const { status, location, weight, height, width, length, branch, senderName, receiverName, deliveryDate } = data;
 
-    if (!id || !status || !location) {
+    if (!status || !location || !weight || !height || !width || !length || !branch || !senderName || !receiverName || !deliveryDate) {
       return new Response(JSON.stringify({ message: "All fields are required" }), {
         status: 400,
       });
     }
 
-    const newParcel = await Parcel.create({ id, status, location });
+    const id = uuidv4(); // Generate a random unique parcel ID
+
+    const newParcel = await Parcel.create({
+      id,
+      status,
+      location,
+      weight,
+      height,
+      width,
+      length,
+      branch,
+      senderName,
+      receiverName,
+      deliveryDate,
+    });
 
     return new Response(JSON.stringify({ message: "Parcel created successfully", parcel: newParcel }), {
       status: 201,
@@ -45,6 +59,7 @@ export async function POST(req) {
     });
   }
 }
+
 export async function DELETE(req) {
   try {
     await connectDB(); // Ensure DB is connected

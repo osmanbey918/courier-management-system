@@ -8,5 +8,6 @@ export async function GET(req) {
     const token = req.cookies.get("token")?.value;
     const data = await verify(token)
     // console.log(data.role);
+    // localStorage.setItem("user", JSON.stringify(data))
     return new Response(data.role)
 }

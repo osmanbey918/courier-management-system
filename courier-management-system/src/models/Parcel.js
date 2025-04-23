@@ -17,6 +17,42 @@ const parcelSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    weight: {
+      type: Number,
+      required: true,
+    },
+    height: {
+      type: Number,
+      required: true,
+    },
+    width: {
+      type: Number,
+      required: true,
+    },
+    length: {
+      type: Number,
+      required: true,
+    },
+    senderName: {
+      type: String,
+      required: true, // Name of the sender
+    },
+    receiverName: {
+      type: String,
+      required: true, // Name of the receiver
+    },
+    deliveryDate: {
+      type: Date,
+      required: true, // Expected delivery date
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now, // Automatically set to current time
+    },
+    branch: {
+      type: String,
+      required: true, // Branch where the parcel is submitted
+    },
   },
   { timestamps: true }
 );
