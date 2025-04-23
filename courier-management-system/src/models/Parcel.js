@@ -33,6 +33,10 @@ const parcelSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    branch: {
+      type: String,
+      required: true, // Branch where the parcel is submitted
+    },
     senderName: {
       type: String,
       required: true, // Name of the sender
@@ -49,10 +53,7 @@ const parcelSchema = new mongoose.Schema(
       type: Date,
       default: Date.now, // Automatically set to current time
     },
-    branch: {
-      type: String,
-      required: true, // Branch where the parcel is submitted
-    },
+
   },
   { timestamps: true }
 );

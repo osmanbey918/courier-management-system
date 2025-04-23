@@ -9,5 +9,14 @@ export async function GET(req) {
     const data = await verify(token)
     // console.log(data.role);
     // localStorage.setItem("user", JSON.stringify(data))
-    return new Response(data.role)
+    return new Response(JSON.stringify({
+        role: data.role,
+        branchCode: data.code // or data.branchCode if that's the actual key
+    }), {
+        status: 200,
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
 }

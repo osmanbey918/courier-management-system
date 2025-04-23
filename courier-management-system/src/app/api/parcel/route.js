@@ -25,16 +25,15 @@ export async function POST(req) {
     await connectDB(); // Ensure DB is connected
 
     const data = await req.json();
-    const { status, location, weight, height, width, length, branch, senderName, receiverName, deliveryDate } = data;
-
+    const { status, location, weight, height, width, length, senderName, receiverName, deliveryDate, branch } = data;
+    console.log("Creating new parcel with data:", data); // Log the incoming data
     if (!status || !location || !weight || !height || !width || !length || !branch || !senderName || !receiverName || !deliveryDate) {
       return new Response(JSON.stringify({ message: "All fields are required" }), {
         status: 400,
       });
     }
 
-    const id = uuidv4(); // Generate a random unique parcel ID
-
+    const id = Math.floor(1000 + Math.random() * 9000); // Generate random code
     const newParcel = await Parcel.create({
       id,
       status,

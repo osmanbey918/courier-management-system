@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import axios from "axios";
-import Link from "next/link";
+
 
 export default function NavBar() {
   const [role, setRole] = useState(null)
@@ -13,8 +13,10 @@ export default function NavBar() {
 
   useEffect(() => {
     async function getRole() {
-      const data = await axios.get('/api/role');
-      setRole(data.data)
+      const res = await axios.get('/api/role');
+      // console.log(res.data.branchCode);
+      setRole(res.data.role);
+      localStorage.setItem("branchCode", JSON.stringify(res.data.branchCode))
     }
     getRole();
 
