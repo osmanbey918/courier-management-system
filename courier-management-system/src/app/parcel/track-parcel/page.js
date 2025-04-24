@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import axios from "axios";
+import DeleteBtn from '@/components/deleteBtn/DeleteBtn';
 
 function TrackParcel() {
     const [parcelId, setParcelId] = useState('');
@@ -52,19 +53,24 @@ function TrackParcel() {
                 )}
 
                 {parcelData && (
-                    <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-6">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                            📝 Parcel Details
-                        </h2>
-                        <p className="text-gray-700">
-                            <strong>ID:</strong> {parcelData.id}
-                        </p>
-                        <p className="text-gray-700">
-                            <strong>Status:</strong> {parcelData.status}
-                        </p>
-                        <p className="text-gray-700">
-                            <strong>Location:</strong> {parcelData.location}
-                        </p>
+                    <div
+                        className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
+                    >
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2">
+                            <h2 className="text-xl font-semibold text-gray-800">
+                                📝 Parcel Details
+                            </h2>
+                            <p><strong>ID:</strong> {parcelData.id}</p>
+                            <p><strong>Status:</strong> {parcelData.status}</p>
+                            <p><strong>Location:</strong> {parcelData.location}</p>
+                            <p><strong>Sender:</strong> {parcelData.senderName}</p>
+                            <p><strong>Receiver:</strong> {parcelData.receiverName}</p>
+                            <p><strong>Weight:</strong> {parcelData.weight} kg</p>
+                            <p><strong>Dimensions:</strong> {parcelData.length}x{parcelData.width}x{parcelData.height} cm</p>
+                            <p><strong>Delivery Date:</strong> {parcelData.deliveryDate}</p>
+                            <p><strong>Branch:</strong> {parcelData.branch}</p>
+                            <DeleteBtn id={parcelData.id} status="parcel" />
+                        </div>
                     </div>
                 )}
             </div>
