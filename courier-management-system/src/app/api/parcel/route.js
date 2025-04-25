@@ -25,7 +25,7 @@ export async function POST(req) {
     await connectDB(); // Ensure DB is connected
 
     const data = await req.json();
-    const { status, location, weight, height, width, length, senderName, receiverName, deliveryDate, branch } = data;
+    const { status, location, weight, height, width, length, senderName, receiverName, deliveryDate, branch, statusHistory } = data;
     console.log("Creating new parcel with data:", data); // Log the incoming data
     if (!status || !location || !weight || !height || !width || !length || !branch || !senderName || !receiverName || !deliveryDate) {
       return new Response(JSON.stringify({ message: "All fields are required" }), {
@@ -46,6 +46,7 @@ export async function POST(req) {
       senderName,
       receiverName,
       deliveryDate,
+      statusHistory: statusHistory || []
     });
 
     return new Response(JSON.stringify({ message: "Parcel created successfully", parcel: newParcel }), {

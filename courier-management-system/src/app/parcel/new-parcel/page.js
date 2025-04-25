@@ -52,9 +52,16 @@ export default function Page() {
     setMessage('');
     setError('');
     try {
-      console.log('Form data:', form); // Debugging line
-      const res = await axios.post('/api/parcel', form);
-
+      const updatedBy = localStorage.getItem('branchCode') || 'Unknown';
+      const statusHistory = [{
+        status: form.status,
+        location: form.location,
+        updatedBy,
+        timestamp: new Date().toISOString()
+      }];
+      const formWithHistory = { ...form, statusHistory };
+      console.log('Form data:', formWithHistory); // Debugging line
+      const res = await axios.post('/api/parcel', formWithHistory);
       setMessage(res.data.message);
       setForm({ ...initialFormState, deliveryDate: getToday() }); // Reset to current date
     } catch (err) {

@@ -53,7 +53,14 @@ const parcelSchema = new mongoose.Schema(
       type: Date,
       default: Date.now, // Automatically set to current time
     },
-
+    statusHistory: [
+      {
+        status: { type: String, required: true },
+        location: { type: String, required: true },
+        updatedBy: { type: String, required: true },
+        timestamp: { type: Date, default: Date.now }
+      }
+    ],
   },
   { timestamps: true }
 );
