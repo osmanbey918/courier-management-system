@@ -106,7 +106,7 @@ function StatusUpdateForm({ parcelId }) {
     return (
         <form onSubmit={handleSubmit} className="mt-6 bg-blue-50 p-4 rounded-lg">
             <h3 className="font-semibold mb-2">Update Parcel Status</h3>
-            <div className="flex flex-col sm:flex-row gap-2 mb-2">
+            <div className="flex flex-col sm:flex-row gap-2 mb-2"> 
                 <select value={status} onChange={e => setStatus(e.target.value)} required className="flex-1 px-2 py-1 rounded">
                     <option value="">Select Status</option>
                     <option value="Pending">Pending</option>
