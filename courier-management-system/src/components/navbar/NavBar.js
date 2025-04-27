@@ -59,46 +59,59 @@ export default function NavBar() {
       >
         <div className="text-2xl font-bold mb-6">📦 Courier Admin</div>
 
-        <button className="p-2 text-left hover:bg-gray-700 block w-full" onClick={() => router.push(`/dashboard/${role}`)}>
-          🏠 Dashboard
-        </button>
-
-        {/* Branch */}
-        {role === 'admin' ? <div className="mt-4">
-          <label htmlFor="branch-select" className="block text-sm mb-1">🏢 Branch</label>
-          <select id="branch-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
-            <option value="">Select</option>
-            <option value="/branch/new-branch">➕ Add New Branch</option>
-            <option value="/branch/branch-list">📃 Branch List</option>
-          </select>
-        </div> : ''}
-
-
-        {/* Staff */}
-        <div className="mt-4">
-          <label htmlFor="staff-select" className="block text-sm mb-1">👨‍💼 Branch Staff</label>
-          <select id="staff-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
-            <option value="">Select</option>
-            <option value="/staff/add-staff">➕ Add Staff</option>
-            <option value="/staff/staff-list">📃 Staff List</option>
-          </select>
-        </div>
-
-        {/* Parcel */}
+        {/* Always show Track Parcel option, regardless of login */}
         <div className="mt-4">
           <label htmlFor="parcel-select" className="block text-sm mb-1">📦 Parcels</label>
           <select id="parcel-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
             <option value="">Select</option>
-            <option value="/parcel/new-parcel">📦 New Parcel</option>
             <option value="/parcel/track-parcel">📍 Track Parcel</option>
-            <option value="/parcel/parcel-list">📃 Parcel List</option>
           </select>
         </div>
 
-        {/* Other Links */}
-        <button className="p-2 text-left hover:bg-gray-700 mt-6 block w-full" onClick={() => router.push("/reports")}>
-          📊 Reports
-        </button>
+        {/* Show full menu if user has a role */}
+        {(role && role !== null && role !== undefined) && (
+          <>
+            <button className="p-2 text-left hover:bg-gray-700 block w-full" onClick={() => router.push(`/dashboard/${role}`)}>
+              🏠 Dashboard
+            </button>
+
+            {/* Branch */}
+            {role === 'admin' ? <div className="mt-4">
+              <label htmlFor="branch-select" className="block text-sm mb-1">🏢 Branch</label>
+              <select id="branch-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
+                <option value="">Select</option>
+                <option value="/branch/new-branch">➕ Add New Branch</option>
+                <option value="/branch/branch-list">📃 Branch List</option>
+              </select>
+            </div> : ''}
+
+            {/* Staff */}
+            <div className="mt-4">
+              <label htmlFor="staff-select" className="block text-sm mb-1">👨‍💼 Branch Staff</label>
+              <select id="staff-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
+                <option value="">Select</option>
+                <option value="/staff/add-staff">➕ Add Staff</option>
+                <option value="/staff/staff-list">📃 Staff List</option>
+              </select>
+            </div>
+
+            {/* Parcel */}
+            <div className="mt-4">
+              <label htmlFor="parcel-select" className="block text-sm mb-1">📦 Parcels</label>
+              <select id="parcel-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
+                <option value="">Select</option>
+                <option value="/parcel/new-parcel">📦 New Parcel</option>
+                <option value="/parcel/track-parcel">📍 Track Parcel</option>
+                <option value="/parcel/parcel-list">📃 Parcel List</option>
+              </select>
+            </div>
+
+            {/* Other Links */}
+            <button className="p-2 text-left hover:bg-gray-700 mt-6 block w-full" onClick={() => router.push("/reports")}> 
+              📊 Reports
+            </button>
+          </>
+        )}
       </div>
 
       {/* Optional Mobile Overlay */}
