@@ -10,6 +10,7 @@ export default function NavWrapper() {
   if (pathname === '/') {
     return '';
   }
-
   return <NavBar />;
+
+
 }

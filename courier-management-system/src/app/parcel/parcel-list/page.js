@@ -7,33 +7,48 @@ export default async function Page() {
   const parcelData = await res.json();
 
   return (
-    <div className="bg-[#F5F5F5] min-h-screen py-10 px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">📦 All Parcels</h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        {parcelData.map((data, index) => (
-          <div
-            key={index}
-            className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
-          >
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2">
-              <h2 className="text-xl font-semibold text-gray-800">
-                📝 Parcel Details
-              </h2>
-              <p><strong>ID:</strong> {data.id}</p>
-              <p><strong>Status:</strong> {data.status}</p>
-              <p><strong>Location:</strong> {data.location}</p>
-              <p><strong>Sender:</strong> {data.senderName}</p>
-              <p><strong>Receiver:</strong> {data.receiverName}</p>
-              <p><strong>Weight:</strong> {data.weight} kg</p>
-              <p><strong>Dimensions:</strong> {data.length}x{data.width}x{data.height} cm</p>
-              <p><strong>Delivery Date:</strong> {data.deliveryDate}</p>
-              <p><strong>Branch:</strong> {data.branch}</p>
-              <DeleteBtn id={data.id} status="parcel" />
-            </div>
+    <section className="min-h-[87vh] bg-gray-100 py-10 px-5 overflow-hidden">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl mx-auto">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+          Parcel List
+        </h2>
+        <div className="max-h-[600px] overflow-y-auto">
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-gray-300 min-w-[800px] overflow-hidden">
+              <thead className="sticky top-0 bg-gray-200">
+                <tr className="bg-gray-200">
+                  <th className="p-3 border"><strong>ID:</strong></th>
+                  <th className="p-3 border"><strong>Status:</strong></th>
+                  <th className="p-3 border"><strong>Location:</strong></th>
+                  <th className="p-3 border"><strong>Sender:</strong></th>
+                  <th className="p-3 border"><strong>Receiver:</strong></th>
+                  <th className="p-3 border"><strong>Weight:</strong></th>
+                  <th className="p-3 border"><strong>Dimensions:</strong></th>
+                  <th className="p-3 border"><strong>Delivery Date:</strong></th>
+                  <th className="p-3 border"><strong>Branch:</strong> </th>
+                  <th className="p-3 border"><strong>Delete</strong> </th>
+                </tr>
+              </thead>
+              <tbody>
+                {parcelData.map((data, index) => (
+                  <tr key={index} className="text-center">
+                    <td className="p-2 border">{data.id}</td>
+                    <td className="p-2 border">{data.status}</td>
+                    <td className="p-2 border">{data.location}</td>
+                    <td className="p-2 border">{data.senderName}</td>
+                    <td className="p-2 border">{data.receiverName}</td>
+                    <td className="p-2 border">{data.weight}</td>
+                    <td className="p-2 border">{data.length}x{data.width}x{data.height} cm</td>
+                    <td className="p-2 border">{data.deliveryDate}</td>
+                    <td className="p-2 border">{data.branch}</td>
+                    <td className="p-3 border"><DeleteBtn id={data.id} status="parcel" /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -59,15 +59,6 @@ export default function NavBar() {
       >
         <div className="text-2xl font-bold mb-6">📦 Courier Admin</div>
 
-        {/* Always show Track Parcel option, regardless of login */}
-        <div className="mt-4">
-          <label htmlFor="parcel-select" className="block text-sm mb-1">📦 Parcels</label>
-          <select id="parcel-select" className="bg-gray-700 w-full p-2 rounded" onChange={handleSelectChange}>
-            <option value="">Select</option>
-            <option value="/parcel/track-parcel">📍 Track Parcel</option>
-          </select>
-        </div>
-
         {/* Show full menu if user has a role */}
         {(role && role !== null && role !== undefined) && (
           <>
@@ -107,7 +98,7 @@ export default function NavBar() {
             </div>
 
             {/* Other Links */}
-            <button className="p-2 text-left hover:bg-gray-700 mt-6 block w-full" onClick={() => router.push("/reports")}> 
+            <button className="p-2 text-left hover:bg-gray-700 mt-6 block w-full" onClick={() => router.push("/reports")}>
               📊 Reports
             </button>
           </>
