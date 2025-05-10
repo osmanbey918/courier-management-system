@@ -1,0 +1,27 @@
+.table-container {
+  overflow-x: Hidden;
+  overflow-y: auto;
+  max-width: 100%;
+  max-height: 600px; /* Optional: for vertical scroll */
+}
+
+.parcel-table {
+  min-width: 1000px;
+  /* border-collapse: collapse; */
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.parcel-table th,
+.parcel-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.parcel-table thead {
+  /* position: sticky;
+  top: 0;
+  background-color: #f2f2f2;
+  z-index: 1; */
+}
