@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { jwtVerify } from 'jose';
 // import { cookies } from "next/headers";
-const secret = process.env.JWT_SECRET || "your_secret_key";
+const secret = process.env.JWT_SECRET;
 
 export const signToken = (payload) => {
   return jwt.sign(payload, secret, { expiresIn: "1d" });

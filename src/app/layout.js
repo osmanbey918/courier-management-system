@@ -15,13 +15,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className="layout flex ">
-          {/* <NavWrapper /> */}
+          <NavWrapper />
           <div className="flex-1 flex flex-col">
-            {/* <Header /> */}
+            <Header />
             <main className="content" >{children}</main>
           </div>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
